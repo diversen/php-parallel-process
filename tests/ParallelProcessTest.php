@@ -19,6 +19,7 @@ final class ParallelProcessTest extends TestCase
             }
         });
         $parallel->addProcess(function () {
+            sleep(1);
             return 2;
         });
 
