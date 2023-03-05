@@ -1,6 +1,6 @@
 # php parallel process
 
-Simple PHP library for running processes in parallel using pcntl.
+Simple PHP library for running processes in parallel using [pcntl](https://www.php.net/manual/en/book.pcntl.php).
 
 ## Installation
 
