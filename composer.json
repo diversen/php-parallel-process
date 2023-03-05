@@ -1,0 +1,24 @@
+{
+    "name": "diversen/parallel-processes",
+    "type": "library",
+    "description": "Maybe the most simple way to run parallel processes in php",
+    "homepage": "https://github.com/diversen/php-parallel-process",
+    "keywords": ["proccess", "parallel", "parallel-process"],
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Diversen\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Dennis Iversen",
+            "email": "dennis.iversen@gmail.com",
+            "homepage": "https://github.com/diversen",
+            "role": "Developer"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^10.0"
+    }
+}
