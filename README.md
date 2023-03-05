@@ -8,7 +8,7 @@ Simple PHP library for running processes in parallel using [pcntl](https://www.p
 
 ## Usage
 
-See [example/simple.php](example/simple.php) folder. E.g. run `php example/simple.php`
+See [example/simple.php](example/simple.php). E.g. run `php example/simple.php`
 
 ## Tests
 
