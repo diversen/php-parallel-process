@@ -12,11 +12,13 @@ final class ParallelProcessTest extends TestCase
     {
         $parallel = new ParallelProcess();
         $parallel->addProcess(function () {
-            sleep(1);
-            return 1;
+            try {
+                throw new Exception('Test');
+            } catch (Exception $e) {
+                return 1;
+            }
         });
         $parallel->addProcess(function () {
-            sleep(2);
             return 2;
         });
 
