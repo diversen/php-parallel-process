@@ -17,7 +17,7 @@ class ParallelProcess
     }
 
     /**
-     * add a process to the queue
+     * add a process to be run in parallel
      */
     public function addProcess(callable $command)
     {
@@ -27,7 +27,7 @@ class ParallelProcess
     /**
      * run all processes
      */
-    public function run()
+    public function run(): array
     {
         $processes = $this->processes;
         $this->processes = [];

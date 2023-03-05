@@ -4,25 +4,25 @@ require_once "vendor/autoload.php";
 
 use Diversen\ParallelProcess;
 
-$async = new ParallelProcess();
-$async->addProcess(function () {
+$parallel = new ParallelProcess();
+$parallel->addProcess(function () {
     // posix_getpid(); // get the process id of the current process
     sleep(1);
     return 1;
 });
 
-$async->addProcess(function(){
+$parallel->addProcess(function(){
     sleep(2);
     return 2;
     
 });
 
-$async->addProcess(function(){
+$parallel->addProcess(function(){
     sleep(3);
     return 3;
 });
 
-$results = $async->run();
+$results = $parallel->run();
 var_dump($results);
 
 // Return codes of all the child processes
@@ -35,7 +35,7 @@ var_dump($results);
 //     int(3)
 //   }
 
-var_dump($async->getPids());  
+var_dump($parallel->getPids());  
 
 // Pids of all the child processes
 // Somthing like this:
