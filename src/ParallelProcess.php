@@ -7,13 +7,12 @@ use Exception;
 class ParallelProcess
 {
 
-    private $processes = [];
-    private $results = [];
-    private $pids = [];
+    private array $callbacks = [];
+    private array $pids = [];
 
     public function __construct()
     {
-        $this->processes = [];
+        $this->callbacks = [];
     }
 
     /**
@@ -21,44 +20,47 @@ class ParallelProcess
      */
     public function addProcess(callable $command)
     {
-        $this->processes[] = $command;
+        $this->callbacks[] = $command;
     }
 
     /**
-     * run all processes
+     * run all callbacks
      */
     public function run(): array
-    {
-        $processes = $this->processes;
-        $this->processes = [];
-
-        foreach ($processes as $command) {
+    {   
+        
+        foreach ($this->callbacks as $callback) {
             $pid = pcntl_fork();
             if ($pid === -1) {
                 throw new Exception("Could not fork a new process!");
             }
             if ($pid) {
-                $this->pids[] = $pid;
+                // Parent
+                $this->pids[$pid] = true;
             } else {
-                $res = $command();
+                // Child
+                $res = $callback();
                 exit($res);
             }
         }
+        
+        // Parent
+        $results = [];
+        while (!empty($this->pids)) {
 
-        while (pcntl_waitpid(0, $status) != -1) {
-            $status = pcntl_wexitstatus($status);
-            $this->results[] = $status;
+            // Wait for ANY child process to exit and return the pid of the child
+            // That is what the -1 is for
+            $pid = pcntl_waitpid(-1, $status);        
+            if ($pid === -1) {
+                throw new Exception("Error waiting for child process!");
+            }
+            if (isset($this->pids[$pid])) {
+                unset($this->pids[$pid]);
+                $status = pcntl_wexitstatus($status);
+                $results[$pid] = $status;
+            }
         }
-
-        return $this->results;
-    }
-
-
-    /**
-     * return all child process ids
-     */
-    public function getPids(): array
-    {
-        return $this->pids;
+        
+        return $results;
     }
 }

@@ -23,9 +23,11 @@ final class ParallelProcessTest extends TestCase
             return 2;
         });
 
+        $result = array_values($parallel->run());
+        // Assertion that checks the values of an array
         $this->assertEquals(
             [1, 2],
-            $parallel->run()
+            $result
         );
     }
 }

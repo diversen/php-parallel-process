@@ -14,3 +14,4 @@ for ($i = 0; $i < 1000; $i++) {
 }
 
 $results = $parallel->run();
+var_dump($results);
